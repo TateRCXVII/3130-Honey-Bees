@@ -1,0 +1,18 @@
+34,"t","Honey: Released March 18, 2022, by the National Agricultural Statistics Service (NASS), Agricultural Statistics Board, United States Department of Agriculture (USDA)."
+34,"t","Reliability of Honey Estimates"
+34,"t","[Based on data for the previous ten years]"
+34,"h","","","","","","","",""
+34,"h","","Root mean","90 percent","Difference between first and latest estimate","Difference between first and latest estimate","Difference between first and latest estimate","Difference between first and latest estimate","Difference between first and latest estimate"
+34,"h","","square error","confidence","","","","",""
+34,"h","","","level","","","","",""
+34,"h","Item","","","","","","Years","Years"
+34,"h","","","","","","","",""
+34,"h","","","","Average","Smallest","Largest","Below latest","Above latest"
+34,"h","","","","","","","",""
+34,"u","","(percent)","(percent)","(1,000)","(1,000)","(1,000)","(number)","(number)"
+34,"d","Honey producing colonies",1.1,2.0,13,-,85,6,1
+34,"d","",,,,,,,
+34,"d","Honey production",1.2,2.1,846,-,4796,6,1
+34,"d","",,,,,,,
+34,"c",""
+34,"f","-  Represents zero."
