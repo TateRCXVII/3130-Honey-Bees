@@ -5,9 +5,216 @@ date: "4/19/2022"
 output: ioslides_presentation
 ---
 
-```{r setup, include=FALSE}
+```{r data setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+library(tidyUSDA)
+library(tmap)
+key <- 'B7A59EDE-41E6-31AC-8492-E88C629693FA'
+tidyUSDA::allProgram %>% head()
+honey.prod.2021 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
+  geographic_level = 'STATE',
+  year = '2021',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
 
+honey.prod.2019 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
+  geographic_level = 'STATE',
+  year = '2019',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+honey.prod.2012 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
+  geographic_level = 'STATE',
+  year = '2012',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+honey.prod.2010 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
+  geographic_level = 'STATE',
+  year = '2010',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+honey.prod.2008 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
+  geographic_level = 'STATE',
+  year = '2008',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+honey.prod.2006 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
+  geographic_level = 'STATE',
+  year = '2006',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+honey.prod.2004 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
+  geographic_level = 'STATE',
+  year = '2004',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+honey.prod.2002 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
+  geographic_level = 'STATE',
+  year = '2002',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+honey.prod.2000 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
+  geographic_level = 'STATE',
+  year = '2000',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+honey.prod.1998 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
+  geographic_level = 'STATE',
+  year = '1998',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+hist(honey.prod.1998$Value)
+tmap
+tidyUSDA::plotUSDA(df=honey.prod.2021, fill_by = 'value_per_sq_mile')
+tidyUSDA::plotUSDA(df=honey.prod.2019, fill_by = 'value_per_sq_mile')
+all_data_2002 <- read.csv('data/Hone-02-28-2002/hony_all.csv', header=T)
+all_data_2003 <- read.csv('data/Hone-02-28-2003/hony_all.csv', header=T)
+all_data_2004 <- read.csv('data/Hone-02-27-2004/hony_all.csv', header=T)
+all_data_2005 <- read.csv('data/Hone-02-28-2005/hony_all.csv', header=T)
+all_data_2006 <- read.csv('data/Hone-02-28-2006/hony_all.csv', header=T)
+all_data_2007 <- read.csv('data/Hone-02-28-2007/hony_all.csv', header=T)
+all_data_2008 <- read.csv('data/Hone-02-29-2008/hony_all.csv', header=T)
+all_data_2009 <- read.csv('data/Hone-02-27-2009/hony_all.csv', header=T)
+all_data_2010 <- read.csv('data/Hone-02-26-2010/hony_all.csv', header=T)
+all_data_2011 <- read.csv('data/Hone-02-25-2011/honey_2011.csv')
+all_data_2012 <- read.csv('data/Hone-03-30-2012/hony_all_tables.csv')
+all_data_2013 <- read.csv('data/Hone-03-18-2013/hony_all_tables.csv')
+all_data_2014 <- read.csv('data/Hone-03-21-2014/hony_all_tables.csv')
+all_data_2015 <- read.csv('data/Hone-03-20-2015/hony_all_tables.csv')
+all_data_2016 <- read.csv('data/Hone-03-22-2016/hony_all_tables.csv')
+all_data_2017 <- read.csv('data/Hone-03-22-2017/hony_all_tables.csv')
+all_data_2018 <- read.csv('data/Hone-03-14-2018/hony_all_tables.csv')
+all_data_2019 <- read.csv('data/hony0519/hony_all_tables.csv')
+all_data_2020 <- read.csv('data/hony0320/hony_all_tables.csv')
+all_data_2021 <- read.csv('data/hony0321/hony_all_tables.csv')
+all_data_2022 <- read.csv('data/hony0322/hony_all_tables.csv')
 ```
 
 ## R Markdown
