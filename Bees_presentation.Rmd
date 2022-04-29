@@ -9,8 +9,16 @@ output: ioslides_presentation
 knitr::opts_chunk$set(echo = FALSE)
 library(tidyUSDA)
 library(tmap)
+library(usmap)
+library(ggplot2)
+library(dplyr)
+library(plyr)
+library(tidyverse)
+library(plotly)
 key <- 'B7A59EDE-41E6-31AC-8492-E88C629693FA'
 tidyUSDA::allProgram %>% head()
+
+#Honey Production Data
 honey.prod.2021 <- tidyUSDA::getQuickstat(
   sector='ANIMALS & PRODUCTS',
   group=NULL,
@@ -20,13 +28,9 @@ honey.prod.2021 <- tidyUSDA::getQuickstat(
   county=NULL,
   key = key,
   program = 'SURVEY',
-  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
-  geographic_level = 'STATE',
-  year = '2021',
-  state = NULL,
-  geometry = TRUE,
-  lower48 = FALSE, 
-  weighted_by_area = T
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'NATIONAL',
+  year = '2021'
 )
 
 honey.prod.2019 <- tidyUSDA::getQuickstat(
@@ -38,13 +42,9 @@ honey.prod.2019 <- tidyUSDA::getQuickstat(
   county=NULL,
   key = key,
   program = 'SURVEY',
-  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
-  geographic_level = 'STATE',
-  year = '2019',
-  state = NULL,
-  geometry = TRUE,
-  lower48 = FALSE, 
-  weighted_by_area = T
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'NATIONAL',
+  year = '2019'
 )
 
 honey.prod.2012 <- tidyUSDA::getQuickstat(
@@ -56,13 +56,9 @@ honey.prod.2012 <- tidyUSDA::getQuickstat(
   county=NULL,
   key = key,
   program = 'SURVEY',
-  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
-  geographic_level = 'STATE',
-  year = '2012',
-  state = NULL,
-  geometry = TRUE,
-  lower48 = FALSE, 
-  weighted_by_area = T
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'NATIONAL',
+  year = '2012'
 )
 
 honey.prod.2010 <- tidyUSDA::getQuickstat(
@@ -74,13 +70,9 @@ honey.prod.2010 <- tidyUSDA::getQuickstat(
   county=NULL,
   key = key,
   program = 'SURVEY',
-  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
-  geographic_level = 'STATE',
-  year = '2010',
-  state = NULL,
-  geometry = TRUE,
-  lower48 = FALSE, 
-  weighted_by_area = T
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'NATIONAL',
+  year = '2010'
 )
 
 honey.prod.2008 <- tidyUSDA::getQuickstat(
@@ -92,13 +84,9 @@ honey.prod.2008 <- tidyUSDA::getQuickstat(
   county=NULL,
   key = key,
   program = 'SURVEY',
-  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
-  geographic_level = 'STATE',
-  year = '2008',
-  state = NULL,
-  geometry = TRUE,
-  lower48 = FALSE, 
-  weighted_by_area = T
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'NATIONAL',
+  year = '2008'
 )
 
 honey.prod.2006 <- tidyUSDA::getQuickstat(
@@ -110,13 +98,9 @@ honey.prod.2006 <- tidyUSDA::getQuickstat(
   county=NULL,
   key = key,
   program = 'SURVEY',
-  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
-  geographic_level = 'STATE',
-  year = '2006',
-  state = NULL,
-  geometry = TRUE,
-  lower48 = FALSE, 
-  weighted_by_area = T
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'NATIONAL',
+  year = '2006'
 )
 
 honey.prod.2004 <- tidyUSDA::getQuickstat(
@@ -128,13 +112,9 @@ honey.prod.2004 <- tidyUSDA::getQuickstat(
   county=NULL,
   key = key,
   program = 'SURVEY',
-  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
-  geographic_level = 'STATE',
-  year = '2004',
-  state = NULL,
-  geometry = TRUE,
-  lower48 = FALSE, 
-  weighted_by_area = T
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'NATIONAL',
+  year = '2004'
 )
 
 honey.prod.2002 <- tidyUSDA::getQuickstat(
@@ -146,13 +126,9 @@ honey.prod.2002 <- tidyUSDA::getQuickstat(
   county=NULL,
   key = key,
   program = 'SURVEY',
-  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
-  geographic_level = 'STATE',
-  year = '2002',
-  state = NULL,
-  geometry = TRUE,
-  lower48 = FALSE, 
-  weighted_by_area = T
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'NATIONAL',
+  year = '2002'
 )
 
 honey.prod.2000 <- tidyUSDA::getQuickstat(
@@ -164,13 +140,9 @@ honey.prod.2000 <- tidyUSDA::getQuickstat(
   county=NULL,
   key = key,
   program = 'SURVEY',
-  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
-  geographic_level = 'STATE',
-  year = '2000',
-  state = NULL,
-  geometry = TRUE,
-  lower48 = FALSE, 
-  weighted_by_area = T
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'NATIONAL',
+  year = '2000'
 )
 
 honey.prod.1998 <- tidyUSDA::getQuickstat(
@@ -182,7 +154,403 @@ honey.prod.1998 <- tidyUSDA::getQuickstat(
   county=NULL,
   key = key,
   program = 'SURVEY',
-  data_item = 'HONEY - PRODUCTION, MEASURED IN LB / COLONY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'NATIONAL',
+  year = '1998'
+)
+
+
+#By state for box plots
+
+state.honey.prod.geomF.2020 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2020',
+  state = NULL
+)
+
+state.honey.prod.geomF.2018 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2018',
+  state = NULL
+)
+
+state.honey.prod.geomF.2016 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2016',
+  state = NULL
+)
+
+state.honey.prod.geomF.2014 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2014',
+  state = NULL
+)
+
+state.honey.prod.geomF.2012 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2012',
+  state = NULL
+)
+
+state.honey.prod.geomF.2010 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2010',
+  state = NULL
+)
+
+state.honey.prod.geomF.2008 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2008',
+  state = NULL
+)
+
+state.honey.prod.geomF.2006 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2006',
+  state = NULL
+)
+
+state.honey.prod.geomF.2004 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2004',
+  state = NULL
+)
+
+state.honey.prod.geomF.2002 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2002',
+  state = NULL
+)
+
+state.honey.prod.geomF.2000 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2000',
+  state = NULL
+)
+
+state.honey.prod.geomF.1998 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '1998',
+  state = NULL
+)
+
+#For Maps
+state.honey.prod.2020 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2020',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+state.honey.prod.2018 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2018',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+state.honey.prod.2016 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2016',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+state.honey.prod.2014 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2014',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+state.honey.prod.2012 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2012',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+state.honey.prod.2010 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2010',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+state.honey.prod.2008 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2008',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+state.honey.prod.2006 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2006',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+state.honey.prod.2004 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2004',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+state.honey.prod.2002 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2002',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+state.honey.prod.2000 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'STATE',
+  year = '2000',
+  state = NULL,
+  geometry = TRUE,
+  lower48 = FALSE, 
+  weighted_by_area = T
+)
+
+state.honey.prod.1998 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
   geographic_level = 'STATE',
   year = '1998',
   state = NULL,
@@ -190,54 +558,86 @@ honey.prod.1998 <- tidyUSDA::getQuickstat(
   lower48 = FALSE, 
   weighted_by_area = T
 )
-hist(honey.prod.1998$Value)
-tmap
-tidyUSDA::plotUSDA(df=honey.prod.2021, fill_by = 'value_per_sq_mile')
-tidyUSDA::plotUSDA(df=honey.prod.2019, fill_by = 'value_per_sq_mile')
-all_data_2002 <- read.csv('data/Hone-02-28-2002/hony_all.csv', header=T)
-all_data_2003 <- read.csv('data/Hone-02-28-2003/hony_all.csv', header=T)
-all_data_2004 <- read.csv('data/Hone-02-27-2004/hony_all.csv', header=T)
-all_data_2005 <- read.csv('data/Hone-02-28-2005/hony_all.csv', header=T)
-all_data_2006 <- read.csv('data/Hone-02-28-2006/hony_all.csv', header=T)
-all_data_2007 <- read.csv('data/Hone-02-28-2007/hony_all.csv', header=T)
-all_data_2008 <- read.csv('data/Hone-02-29-2008/hony_all.csv', header=T)
-all_data_2009 <- read.csv('data/Hone-02-27-2009/hony_all.csv', header=T)
-all_data_2010 <- read.csv('data/Hone-02-26-2010/hony_all.csv', header=T)
-all_data_2011 <- read.csv('data/Hone-02-25-2011/honey_2011.csv')
-all_data_2012 <- read.csv('data/Hone-03-30-2012/hony_all_tables.csv')
-all_data_2013 <- read.csv('data/Hone-03-18-2013/hony_all_tables.csv')
-all_data_2014 <- read.csv('data/Hone-03-21-2014/hony_all_tables.csv')
-all_data_2015 <- read.csv('data/Hone-03-20-2015/hony_all_tables.csv')
-all_data_2016 <- read.csv('data/Hone-03-22-2016/hony_all_tables.csv')
-all_data_2017 <- read.csv('data/Hone-03-22-2017/hony_all_tables.csv')
-all_data_2018 <- read.csv('data/Hone-03-14-2018/hony_all_tables.csv')
-all_data_2019 <- read.csv('data/hony0519/hony_all_tables.csv')
-all_data_2020 <- read.csv('data/hony0320/hony_all_tables.csv')
-all_data_2021 <- read.csv('data/hony0321/hony_all_tables.csv')
-all_data_2022 <- read.csv('data/hony0322/hony_all_tables.csv')
+
+#Example of mapping data
+#ggplot(data = state.honey.prod.1998, aes(fill = Value)) +
+ # geom_sf()
+
+
+#Manipulating data
+state.df.list <- list(state.honey.prod.geomF.1998, 
+                      state.honey.prod.geomF.2000, 
+                      state.honey.prod.geomF.2002, 
+                      state.honey.prod.geomF.2004, 
+                      state.honey.prod.geomF.2006, 
+                      state.honey.prod.geomF.2008, 
+                      state.honey.prod.geomF.2010, 
+                      state.honey.prod.geomF.2012, 
+                      state.honey.prod.geomF.2014, 
+                      state.honey.prod.geomF.2016, 
+                      state.honey.prod.geomF.2018,
+                      state.honey.prod.geomF.2020)
+
+all.state.data <- Reduce(function(...) merge(...,all=T), state.df.list)
+
+
 ```
+
 
 ## R Markdown
 
+```{r}
+boxplot(Value ~ year, data = all.state.data, 
+        main="Stats for Honey Production, 1998-2020", 
+        xlab="States", ylab="Value", 
+        col=rainbow(length(2020:1998)))
+
+plot(Value ~ year, data = all.state.data, 
+        main="Stats for Honey Production, 1998-2020", 
+        xlab="States", ylab="Value", 
+        col=rainbow(length(2020:1998)))
+
+scatter.plot.states <- ggplot(data = all.state.data, aes(x=year, y=Value, color=state_name)) +
+  geom_point() + 
+  geom_smooth()
+
+ggplotly(scatter.plot.states)
+```
 This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
 
 ## Slide with Bullets
+```{r}
 
+plot(Value ~ year, data = all.state.data, 
+        main="Stats for Honey Production, 1998-2020", 
+        xlab="States", ylab="Value", 
+        col=rainbow(length(2020:1998)))
+
+
+```
 - Bullet 1
 - Bullet 2
 - Bullet 3
 
 ## Slide with R Output
 
-```{r cars, echo = TRUE}
-summary(cars)
+```{r scatter, warning=FALSE,message=FALSE}
+scatter.plot.states <- ggplot(data = all.state.data, aes(x=year, y=Value, color=state_name)) +
+  geom_point() + 
+  geom_smooth()
+
+ggplotly(scatter.plot.states)
 ```
 
 ## Slide with Plot
 
-```{r pressure}
-plot(pressure)
+```{r t.test}
+national.honey.prod.list.98.06 <- list(honey.prod.1998, honey.prod.2000, honey.prod.2002, honey.prod.2004, honey.prod.2006)
+national.honey.prod.list.08.21 <- list(honey.prod.2008, honey.prod.2010, honey.prod.2012, honey.prod.2019, honey.prod.2021)
+data.98.06 <- Reduce(function(...) merge(...,all=T), national.honey.prod.list.98.06)
+data.08.21 <- Reduce(function(...) merge(...,all=T), national.honey.prod.list.08.21)
+t.test(data.98.06$Value, data.08.21$Value, conf.level = 0.95)
 ```
 
