@@ -19,7 +19,7 @@ key <- 'B7A59EDE-41E6-31AC-8492-E88C629693FA'
 tidyUSDA::allProgram %>% head()
 
 #Honey Production Data
-honey.prod.2021 <- tidyUSDA::getQuickstat(
+honey.prod.2020 <- tidyUSDA::getQuickstat(
   sector='ANIMALS & PRODUCTS',
   group=NULL,
   commodity='HONEY',
@@ -30,10 +30,36 @@ honey.prod.2021 <- tidyUSDA::getQuickstat(
   program = 'SURVEY',
   data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
   geographic_level = 'NATIONAL',
-  year = '2021'
+  year = '2020'
+)
+honey.prod.2018 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'NATIONAL',
+  year = '2018'
+)
+honey.prod.2016 <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = 'SURVEY',
+  data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
+  geographic_level = 'NATIONAL',
+  year = '2016'
 )
 
-honey.prod.2019 <- tidyUSDA::getQuickstat(
+honey.prod.2014 <- tidyUSDA::getQuickstat(
   sector='ANIMALS & PRODUCTS',
   group=NULL,
   commodity='HONEY',
@@ -44,7 +70,7 @@ honey.prod.2019 <- tidyUSDA::getQuickstat(
   program = 'SURVEY',
   data_item = 'HONEY - PRODUCTION, MEASURED IN LB',
   geographic_level = 'NATIONAL',
-  year = '2019'
+  year = '2014'
 )
 
 honey.prod.2012 <- tidyUSDA::getQuickstat(
@@ -158,6 +184,7 @@ honey.prod.1998 <- tidyUSDA::getQuickstat(
   geographic_level = 'NATIONAL',
   year = '1998'
 )
+
 
 
 #By state for box plots
@@ -581,6 +608,69 @@ state.df.list <- list(state.honey.prod.geomF.1998,
 all.state.data <- Reduce(function(...) merge(...,all=T), state.df.list)
 
 
+# Inventory of colonies
+state.inventory <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = NULL,
+  data_item = 'HONEY, BEE COLONIES - INVENTORY, MEASURED IN COLONIES',
+  geographic_level = 'STATE',
+  year = NULL,
+  state = NULL
+)
+
+#Added and replaced
+state.addedAndReplaced <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = NULL,
+  data_item = 'HONEY, BEE COLONIES - ADDED & REPLACED, MEASURED IN COLONIES',
+  geographic_level = 'STATE',
+  year = NULL,
+  state = NULL
+)
+
+# Collapse Disorder
+state.loss.collapse <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = NULL,
+  data_item = 'HONEY, BEE COLONIES - LOSS, COLONY COLLAPSE DISORDER, MEASURED IN COLONIES',
+  geographic_level = 'STATE',
+  year = NULL,
+  state = NULL
+)
+
+#Deadout
+state.loss.deadout <- tidyUSDA::getQuickstat(
+  sector='ANIMALS & PRODUCTS',
+  group=NULL,
+  commodity='HONEY',
+  category=NULL,
+  domain='TOTAL',
+  county=NULL,
+  key = key,
+  program = NULL,
+  data_item = 'HONEY, BEE COLONIES - LOSS, DEADOUT, MEASURED IN COLONIES',
+  geographic_level = 'STATE',
+  year = NULL,
+  state = NULL
+)
 ```
 
 
@@ -592,31 +682,27 @@ boxplot(Value ~ year, data = all.state.data,
         xlab="States", ylab="Value", 
         col=rainbow(length(2020:1998)))
 
-plot(Value ~ year, data = all.state.data, 
+```
+
+```{r}
+outliers <- boxplot(Value ~ year, data = all.state.data, 
         main="Stats for Honey Production, 1998-2020", 
         xlab="States", ylab="Value", 
+        col=rainbow(length(2020:1998))) $out
+
+all.state.data.no.out <- all.state.data[-which(all.state.data$Value %in% outliers),]
+boxplot(Value ~ year, data = all.state.data.no.out, 
+        main="Stats for Honey Production (Zoomed In), 1998-2020", 
+        xlab="States", ylab="Value", 
         col=rainbow(length(2020:1998)))
-
-scatter.plot.states <- ggplot(data = all.state.data, aes(x=year, y=Value, color=state_name)) +
-  geom_point() + 
-  geom_smooth()
-
-ggplotly(scatter.plot.states)
 ```
+
 This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
 
 ## Slide with Bullets
-```{r}
 
-plot(Value ~ year, data = all.state.data, 
-        main="Stats for Honey Production, 1998-2020", 
-        xlab="States", ylab="Value", 
-        col=rainbow(length(2020:1998)))
-
-
-```
 - Bullet 1
 - Bullet 2
 - Bullet 3
@@ -631,11 +717,12 @@ scatter.plot.states <- ggplot(data = all.state.data, aes(x=year, y=Value, color=
 ggplotly(scatter.plot.states)
 ```
 
-## Slide with Plot
+## T Test for Honey Production
+- Comparing '98-'08 to '10-'20
 
 ```{r t.test}
-national.honey.prod.list.98.06 <- list(honey.prod.1998, honey.prod.2000, honey.prod.2002, honey.prod.2004, honey.prod.2006)
-national.honey.prod.list.08.21 <- list(honey.prod.2008, honey.prod.2010, honey.prod.2012, honey.prod.2019, honey.prod.2021)
+national.honey.prod.list.98.08 <- list(honey.prod.1998, honey.prod.2000, honey.prod.2002, honey.prod.2004, honey.prod.2006, honey.prod.2008)
+national.honey.prod.list.10.20 <- list(honey.prod.2010, honey.prod.2012, honey.prod.2014, honey.prod.2016, honey.prod.2018, honey.prod.2020)
 data.98.06 <- Reduce(function(...) merge(...,all=T), national.honey.prod.list.98.06)
 data.08.21 <- Reduce(function(...) merge(...,all=T), national.honey.prod.list.08.21)
 t.test(data.98.06$Value, data.08.21$Value, conf.level = 0.95)
